@@ -23,7 +23,9 @@ docker inspect zookeeper --format='{{ .NetworkSettings.IPAddress }}'
 Use the output in the following command
 
 ```sh
-docker run -p 9092:9092 --name kafka  -e KAFKA_ZOOKEEPER_CONNECT=<zookeeper_ip>:2181 -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://127.0.0.1:9092 -e KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1 -d confluentinc/cp-kafka
+docker run -p 9092:9092 --name kafka  -e KAFKA_ZOOKEEPER_CONNECT=<zookeeper_ip>:2181 \
+ -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://127.0.0.1:9092 \
+ -e KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1 -d confluentinc/cp-kafka
 ```
 
 or more dynamic
@@ -31,5 +33,7 @@ or more dynamic
 ```
 $ Zookeeper_Server_IP=$(docker inspect zookeeper --format='{{ .NetworkSettings.IPAddress }}')
 
-$ docker run -p 9092:9092 --name kafka  -e KAFKA_ZOOKEEPER_CONNECT=${Zookeeper_Server_IP}:2181 -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://127.0.0.1:9092 -e KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1 -d confluentinc/cp-kafka
+$ docker run -p 9092:9092 --name kafka  -e KAFKA_ZOOKEEPER_CONNECT=${Zookeeper_Server_IP}:2181 \
+-e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://127.0.0.1:9092 \
+-e KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1 -d confluentinc/cp-kafka
 ```
