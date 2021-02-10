@@ -1,6 +1,6 @@
 const { Kafka } = require('kafkajs');
 
-const run = async (data = 'John Doe') => {
+const run = async (data = 'Karan') => {
   try {
     // configure client
     const kafka = new Kafka({
