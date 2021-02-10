@@ -26,6 +26,8 @@ const run = async () => {
     await admin.disconnect();
   } catch (err) {
     console.log('Unable to create a topic');
+  } finally {
+    process.exit(0);
   }
 };
 
