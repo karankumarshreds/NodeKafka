@@ -14,6 +14,22 @@ Kafka out of the box needs zookeeper to be running even if you are running a sin
 
 `KAFKA_OFFSET_TOPIC_REPLICATION_FACTOR` we explicitly tells kafka that we are using only a single instance.
 
+Fetch ZOOKEEPERS IP (lets NOT assume that it is running on the 127.0.0.1)
+
 ```
-docker run --name kafka -p 9092:9092 -e KAFKA_ZOOKEEPER_CONNECT=localhost:2181 -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092 -e KAFKA_OFFSET_TOPIC_REPLICATION_FACTOR=1 confluentinc/cp-kafka
+docker inspect zookeeper --format='{{ .NetworkSettings.IPAddress }}'
+```
+
+Use the output in the following command
+
+```sh
+docker run -p 9092:9092 --name kafka  -e KAFKA_ZOOKEEPER_CONNECT=<zookeeper_ip>:2181 -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://127.0.0.1:9092 -e KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1 -d confluentinc/cp-kafka
+```
+
+or more dynamic
+
+```
+$ Zookeeper_Server_IP=$(docker inspect zookeeper --format='{{ .NetworkSettings.IPAddress }}')
+
+$ docker run -p 9092:9092 --name kafka  -e KAFKA_ZOOKEEPER_CONNECT=${Zookeeper_Server_IP}:2181 -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://127.0.0.1:9092 -e KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1 -d confluentinc/cp-kafka
 ```
