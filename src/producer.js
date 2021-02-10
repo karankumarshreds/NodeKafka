@@ -26,7 +26,13 @@ const run = async (data = 'John Doe') => {
         },
       ],
     });
-  } catch (err) {}
+    console.log('Message published', data);
+    await producer.disconnect();
+  } catch (err) {
+    console.log('Unable to send message', err);
+  } finally {
+    process.exit(0);
+  }
 };
 
 run();
